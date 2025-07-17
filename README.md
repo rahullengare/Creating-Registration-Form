@@ -25,6 +25,8 @@ This kind of setup is common in real-world web development, especially for creat
     - Key pair → pem_server_key
     - security group → launch-wizard-1
 
+![Project Screenshot](/images/console.jpg)
+
 ## Step 2: Connect and Install Packages
 
 1. Connect to EC2 via SSH
@@ -32,6 +34,7 @@ This kind of setup is common in real-world web development, especially for creat
 ```bash
 ssh -i "pem-server-key.pem" ec2-user@ec2-107-20-44-28.compute-1.amazonaws.com
 ```
+![Project Screenshot](/images/connect-instance.jpg)
 
 2. Update system
 
@@ -79,7 +82,7 @@ code of signup.html file:
  </head>
  <body>
  <h2>Signup Form</h2>
- <form action="submit.php" method="post">
+ <form action="register.php" method="post">
  <label for="name">Name:</label><br>
  
  <input type="text" id="name" name="name" required><br><br>
@@ -111,6 +114,7 @@ sudo mysql
 alter user root@localhost identified by "root";
 exit;
 ```
+![Project Screenshot](/images/sudo-mysql.jpg)
 
 8.  Create the MySQL Database 
 
@@ -139,7 +143,7 @@ exit;
 10. Create php file → submit.php
 
 ```bash
-sudo vim /usr/share/nginx/html/submit.php
+sudo vim /usr/share/nginx/html/register.php
 ```
 
 Code of register.php file:
@@ -218,6 +222,9 @@ sudo systemctl restart php-fpm
 ```bash
 <enter-your-public-ip>/signup.html
 ```
+![Project Screenshot](/images/register-form.jpg)
+![Project Screenshot](/images/data-save.jpg)
+![Project Screenshot](/images/database.jpg)
 
 ## Step 3: Terminating Your instance
 
@@ -227,4 +234,4 @@ sudo systemctl restart php-fpm
 4. Click on Instance state 
 5. Choose **Terminate (delete) instance**
 6. Now click delete
-
+![Project Screenshot](/images/delete-instnace.jpg)
