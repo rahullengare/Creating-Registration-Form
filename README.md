@@ -30,7 +30,7 @@ This kind of setup is common in real-world web development, especially for creat
 1. Connect to EC2 via SSH
 
 ```bash
-ssh -i "pem-server-key.pem" ec2-user@ec2-44-203-87-121.compute-1.amazonaws.com
+ssh -i "pem-server-key.pem" ec2-user@ec2-107-20-44-28.compute-1.amazonaws.com
 ```
 
 2. Update system
@@ -42,7 +42,7 @@ sudo yum update
 3. Install nginx then start & enable
 
 ```bash
-sudo yum install nginx
+sudo yum install nginx -y
 sudo systemctl start nginx
 sudo systemctl enable nginx
 ```
@@ -50,7 +50,7 @@ sudo systemctl enable nginx
 4. Install mariadb105-server then start & enable
 
 ```bash
-sudo yum install mariadb105-server
+sudo yum install mariadb105-server -y
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
 ```
@@ -58,7 +58,7 @@ sudo systemctl enable mariadb
 5. Install php-fpm then start & enable
 
 ```bash
-sudo yum install php-fpm
+sudo yum install php-fpm -y
 sudo systemctl start php-fpm
 sudo systemctl enable php-fpm
 ```
@@ -105,15 +105,23 @@ code of signup.html file:
  </html>
 ```
 
-7. Create the MySQL Database 
-
+7. log into the mysql db and set password
 ```bash
 sudo mysql
-CREATE DATABASE myntra;
-USE myntra;
+alter user root@localhost identified by "root";
+exit;
 ```
 
-8. Inside the MySQL create Table:
+8.  Create the MySQL Database 
+
+```bash
+sudo mysql -u root -p
+"password -> root"
+create database myntra;
+use myntra;
+```
+
+9. Inside the MySQL create Table:
 
 ```sql
 CREATE TABLE users (
@@ -125,13 +133,13 @@ CREATE TABLE users (
  comment VARCHAR(100)
  );
 
-EXIT;
+exit;
 ```
 
-9. Create php file → register.php
+10. Create php file → submit.php
 
 ```bash
-sudo vim /usr/share/nginx/html/register.php
+sudo vim /usr/share/nginx/html/submit.php
 ```
 
 Code of register.php file:
@@ -192,27 +200,31 @@ mysqli_close($conn);
 </html>
 ```
 
-10. install connector for MySQL 
+11. install connector for MySQL 
 
 ```bash
 sudo yum install php8.4-mysqlnd.x86_64 -y
 ```
 
-11. restart your nginx & php-fpm 
+12. restart your nginx & php-fpm 
 
 ```bash
 sudo systemctl restart nginx
 sudo systemctl restart php-fpm
 ```
 
-12. now checking your database connected 
+13. now checking your database connected 
 
 ```bash
 <enter-your-public-ip>/signup.html
 ```
 
-13. Terminate Your instance 
-- go to AWS console → click on instance
-- select your instance
-- click on Instance state
-- click on terminate (delete) instance
+## Step 3: Terminating Your instance
+
+1. Your use are done then got to AWS console 
+2. Click on EC2 → instance 
+3. Select instance You want to terminated
+4. Click on Instance state 
+5. Choose **Terminate (delete) instance**
+6. Now click delete
+
